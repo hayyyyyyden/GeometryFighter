@@ -10,9 +10,14 @@ import UIKit
 import SceneKit
 
 class GameViewController: UIViewController {
+    
+    var scn视图: SCNView!
+    var scn场景: SCNScene!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        配置视图()
+        配置场景()
     }
     
     override func shouldAutorotate() -> Bool {
@@ -21,6 +26,15 @@ class GameViewController: UIViewController {
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func 配置视图() {
+        scn视图 = self.view as! SCNView
+    }
+    
+    func 配置场景() {
+        scn场景 = SCNScene()
+        scn视图.scene = scn场景
     }
 
 }
