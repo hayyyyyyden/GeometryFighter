@@ -55,23 +55,25 @@ class GameViewController: UIViewController {
     func 生成几何体() {
         var 几何体: SCNGeometry
         switch 形状.随机() {
-        default:
+        case .立方体:
             几何体 = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+        case .球体:
+            几何体 = SCNSphere(radius: 0.5)
+        case .锥体:
+            几何体 = SCNPyramid(width: 1.0, height: 1.0, length: 1.0)
+        case .圆环体:
+            几何体 = SCNTorus(ringRadius: 0.5, pipeRadius: 0.25)
+        case .胶囊体:
+            几何体 = SCNCapsule(capRadius: 0.3, height: 2.5)
+        case .圆柱体:
+            几何体 = SCNCylinder(radius: 0.3, height: 2.5)
+        case .圆锥体:
+            几何体 = SCNCone(topRadius: 0.25, bottomRadius: 0.5, height: 1.0)
+        case .水管体:
+            几何体 = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 1.0)
         }
         let 几何体节点 = SCNNode(geometry: 几何体)
         scn场景.rootNode.addChildNode(几何体节点)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 }
