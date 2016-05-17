@@ -48,7 +48,7 @@ class GameViewController: UIViewController {
     func 配置摄像头() {
         摄像头节点 = SCNNode()
         摄像头节点.camera = SCNCamera()
-        摄像头节点.position = SCNVector3(x: 0, y: 0, z: 10)
+        摄像头节点.position = SCNVector3(x: 0, y: 5, z: 10)
         scn场景.rootNode.addChildNode(摄像头节点)
     }
     
@@ -72,7 +72,17 @@ class GameViewController: UIViewController {
         case .水管体:
             几何体 = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 1.0)
         }
+        几何体.materials.first?.diffuse.contents = UIColor.random()
+
         let 几何体节点 = SCNNode(geometry: 几何体)
+        几何体节点.physicsBody = SCNPhysicsBody(type: .Dynamic, shape: nil)
+        
+        let 随机X = Float.random(min: -2, max: 2)
+        let 随机Y = Float.random(min: 10, max: 18)
+        let 力 = SCNVector3(x: 随机X, y:随机Y, z:0)
+        let 位置 = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
+        几何体节点.physicsBody?.applyForce(力, atPosition: 位置, impulse: true)
+        
         scn场景.rootNode.addChildNode(几何体节点)
     }
     
