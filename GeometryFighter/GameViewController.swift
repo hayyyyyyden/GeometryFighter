@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     var scn视图: SCNView!
     var scn场景: SCNScene!
     var 摄像头节点: SCNNode!
+    var 重生时间: NSTimeInterval = 0
     
 
     override func viewDidLoad() {
@@ -21,7 +22,6 @@ class GameViewController: UIViewController {
         配置视图()
         配置场景()
         配置摄像头()
-        生成几何体()
     }
     
     override func shouldAutorotate() -> Bool {
@@ -37,6 +37,8 @@ class GameViewController: UIViewController {
         scn视图.showsStatistics = true
         scn视图.allowsCameraControl = true
         scn视图.autoenablesDefaultLighting = true
+        scn视图.delegate = self
+        scn视图.playing = true
     }
     
     func 配置场景() {
@@ -86,4 +88,33 @@ class GameViewController: UIViewController {
         scn场景.rootNode.addChildNode(几何体节点)
     }
     
+    func 清理场景() {
+        for 节点 in scn场景.rootNode.childNodes {
+            if 节点.presentationNode.position.y < -2 {
+                节点.removeFromParentNode()
+            }
+        }
+    }
+    
 }
+
+
+extension GameViewController: SCNSceneRendererDelegate {
+    
+    func renderer(_: SCNSceneRenderer, updateAtTime 当前时间: NSTimeInterval) {
+        if 当前时间 > 重生时间 {
+            清理场景()
+            生成几何体()
+            重生时间 = 当前时间 + NSTimeInterval(Float.random(min: 0.2, max: 1.5))
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
